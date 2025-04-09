@@ -4,6 +4,7 @@ from .semseg import SemsegLoss
 from .normals import NormalsLoss
 from .gt_normals import NormalsGTLoss
 from .edges import EdgesLoss
+from .fluid_aware_layer_loss import FluidAwareLayerLoss
 
 loss_fn = dict(L1_depth=L1, # uses non-inverted depth values
             berhu=BerHu, # expects inverse-normalized depth values
@@ -11,7 +12,8 @@ loss_fn = dict(L1_depth=L1, # uses non-inverted depth values
             normals=NormalsLoss,
             gt_normals=NormalsGTLoss,
             edges=EdgesLoss,
-            cross_entropy=SemsegLoss)
+            cross_entropy=SemsegLoss,
+            fluid_layer_seg=FluidAwareLayerLoss)
 
 def get_loss(cfg, device):
     p = cfg.setup.loss

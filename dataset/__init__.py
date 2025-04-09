@@ -2,6 +2,7 @@ from .cityscapes import Cityscapes
 from .vkitti2 import VKitti2
 from .synthia import Synthia
 from .nyudv2 import NYUDv2
+from .fluid_pseudo import FluidPseudo
 
 from utils.logs import cpprint
 
@@ -9,7 +10,8 @@ def get_dataset(name):
     return {'vkitti2':      VKitti2,
             'synthia':      Synthia,
             'nyudv2':       NYUDv2,
-            'cityscapes':   Cityscapes}[name]
+            'cityscapes':   Cityscapes,
+            'FluidPseudo': FluidPseudo}[name]
 
 def build_dataset(cfg, split, load_labels=True, load_sequence=True):
     dataset = get_dataset(cfg['dataset'])

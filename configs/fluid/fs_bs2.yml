@@ -1,0 +1,61 @@
+data:
+  n_classes: 6                     # 6 layer classes
+  dataset: fluid_pseudo            # Custom dataset identifier
+  path: $ENV:FLUID_DATA_DIR        # Set this env var to the root dataset folder
+  dataset_seed: 42
+
+  # Image resolution (customize if needed)
+  width: 512
+  height: 512
+
+  # Fluid + Pseudo layer labels should both exist
+  load_sequences: False
+  load_semantic_gt: True
+
+  train_bs: 8
+  valid_bs: 8
+  n_valid_logged: 4
+  n_train_logged: 4
+
+  # Number of image scales (for augmentation / multi-scale heads)
+  num_scales: 1
+  augmentations:
+    random_horizontal_flip: 0.5
+
+  color_full_scale: 0
+  only_sequences_with_segmentation: True
+  restrict_to_subset: null
+  val_downsample_gt: False         # Keep full res GT
+  src_split: train
+  val_split: val
+
+training:
+  logdir: $ENV:LOG_DIR/
+  n_workers: 4
+  seed: 42
+  shuffle_trainset: True
+  iterations: 20_000
+  use_amp: True
+  benchmark: True
+  detect_anomaly: False
+  print_interval: 50
+  resume: null
+  save_model: True
+  save_finished_model: True
+  val_interval:
+    '0': 100
+    '1000': 500
+    '5000': 2000
+
+optim:
+  name: Adam
+  clip_grad_norm: 10
+  kwargs:
+    betas: [0.9, 0.98]
+    weight_decay: 1.0e-4
+
+scheduler:
+  name: step
+  kwargs:
+    step_size: 10_000
+    gamma: 0.5
